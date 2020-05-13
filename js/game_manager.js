@@ -139,8 +139,8 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += Math.pow(2,(merged.value.charCodeAt(0)-63));
 
-          // The mighty K tile
-          if (merged.value === "K") self.won = true;
+          // The mighty Z tile
+          if (merged.value === "Z") self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
