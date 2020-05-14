@@ -56,11 +56,37 @@ GameManager.prototype.addStartTiles = function () {
   }
 };
 
+// Adds a well-tempered tile in a random position
+GameManager.prototype.addEasyTile = function () {
+  if (this.grid.cellsAvailable()) {
+    var cell = this.grid.randomAvailableCell();
+
+    // Find good value
+    var values = this.grid.cellValues([
+      { x: cell.x - 1, y: cell.y },
+      { x: cell.x, y: cell.y - 1 },
+      { x: cell.x + 1, y: cell.y },
+      { x: cell.x, y: cell.y + 1 }]);
+    if (values.length == 0) {
+      values = this.grid.cellValues([
+        { x: cell.x - 1, y: cell.y - 1 },
+        { x: cell.x - 1, y: cell.y + 1 },
+        { x: cell.x + 1, y: cell.y - 1 },
+        { x: cell.x + 1, y: cell.y + 1 }]);
+    }
+    values.push("A");
+    value = values[Math.floor(Math.random() * values.length)];
+
+    var tile = new Tile(cell, value);
+    this.grid.insertTile(tile);
+  }
+};
+
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var self = this;
-    var bvalue = 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084096;
+    var bvalue = "Z";
     var bcell = this.grid.randomAvailableCell();
 
     for (var i = 0; i < 8; i++) {
@@ -87,7 +113,7 @@ GameManager.prototype.addRandomTile = function () {
       check(0, -1, 0, -1);
       check(0, 1, 0, 1);
 
-      if (bvalue == 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084096){bvalue = "A";}
+      if (bvalue == "Z"){bvalue = "A";}
     }
 
     var tile = new Tile(bcell, bvalue);
