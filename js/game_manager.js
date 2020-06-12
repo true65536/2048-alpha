@@ -113,7 +113,7 @@ GameManager.prototype.addRandomTile = function () {
       check(0, -1, 0, -1);
       check(0, 1, 0, 1);
 
-      if (bvalue == "Z"){bvalue = "A";}
+      if (bvalue == "Z"){bvalue = "Z";}
     }
 
     var tile = new Tile(bcell, bvalue);
@@ -183,7 +183,7 @@ GameManager.prototype.move = function (direction) {
 
         // Only one merger per row traversal?
         if (next && next.value === tile.value && !next.mergedFrom) {
-          var merged = new Tile(positions.next, String.fromCharCode(tile.value.charCodeAt(0) + 1));
+          var merged = new Tile(positions.next, String.fromCharCode(tile.value.charCodeAt(0) - 1));
           merged.mergedFrom = [tile, next];
 
           self.grid.insertTile(merged);
@@ -196,7 +196,7 @@ GameManager.prototype.move = function (direction) {
           self.score += Math.pow(2,(merged.value.charCodeAt(0)-63));
 
           // The mighty Z tile
-          if (merged.value === "Z") self.won = true;
+          if (merged.value === "A") self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
